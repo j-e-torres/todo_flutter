@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_flutter/screens/login/login.screen.dart';
 import 'package:todo_flutter/screens/root/root.screen.dart';
 import 'package:todo_flutter/screens/screen-wrapper/screen-wrapper.screen.dart';
 
@@ -20,7 +21,9 @@ class MyApp extends StatelessWidget {
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
         routes: {
-          '/': (context) => const ScreenWrapper(child: Root()),
+          '/': (context) => const ScreenWrapper(child: RootScreen()),
+          '/login': (context) => const ScreenWrapper(child: LoginScreen()),
+          '/signup': (context) => const ScreenWrapper(child: Placeholder()),
           '/home': (context) => const ScreenWrapper(child: Placeholder()),
         },
     );

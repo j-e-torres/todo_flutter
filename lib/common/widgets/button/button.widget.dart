@@ -5,6 +5,7 @@ class CustomButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
   final double width;
+  final double marginBottom;
   // final Color color;
   final ButtonVariant variant;
 
@@ -13,8 +14,7 @@ class CustomButton extends StatelessWidget {
       required this.label,
       required this.onPressed,
       this.width = 200,
-      // this.color = Colors.blue
-      // required this.color,
+      this.marginBottom = 12,
       this.variant = ButtonVariant.primary});
 
   static final ButtonStyle _sharedStyles = ElevatedButton.styleFrom(
@@ -40,15 +40,17 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ButtonStyle buttonStyle = _variantStyles[variant] as ButtonStyle;
-    return SizedBox(
-      width: width,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        // style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
-        style: buttonStyle,
-        child: Text(
-          label,
-          style: const TextStyle(fontSize: 20),
+    return Padding(
+      padding: EdgeInsets.only(bottom: marginBottom),
+      child: SizedBox(
+        width: width,
+        child: ElevatedButton(
+          onPressed: onPressed,
+          style: buttonStyle,
+          child: Text(
+            label,
+            style: const TextStyle(fontSize: 20),
+          ),
         ),
       ),
     );
