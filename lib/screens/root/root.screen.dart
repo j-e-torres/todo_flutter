@@ -20,6 +20,7 @@ class RootScreen extends StatelessWidget {
           children: [
             CustomButton(
               label: 'Login',
+              width: 300,
               variant: ButtonVariant.primary,
               onPressed: () {
                 Navigator.pushNamed(context, '/login');

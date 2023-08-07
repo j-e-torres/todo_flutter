@@ -6,7 +6,6 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final double width;
   final double marginBottom;
-  // final Color color;
   final ButtonVariant variant;
 
   const CustomButton(
@@ -18,41 +17,68 @@ class CustomButton extends StatelessWidget {
       this.variant = ButtonVariant.primary});
 
   static final ButtonStyle _sharedStyles = ElevatedButton.styleFrom(
-    padding: const EdgeInsets.all(12),
-    // Add any other shared styles here
-  );
+      padding: const EdgeInsets.all(16),
+      side: const BorderSide(width: 1, color: Colors.orange)
+      // Add any other shared styles here
+      );
 
-  static final Map<ButtonVariant, ButtonStyle> _variantStyles = {
-    ButtonVariant.primary: ElevatedButton.styleFrom(
-      backgroundColor: Colors.orange,
-    ).merge(_sharedStyles),
-    ButtonVariant.secondary: ElevatedButton.styleFrom(
-      backgroundColor: Colors.white,
-    ).merge(_sharedStyles),
-    ButtonVariant.success: ElevatedButton.styleFrom(
-      backgroundColor: Colors.green,
-    ).merge(_sharedStyles),
-    ButtonVariant.danger: ElevatedButton.styleFrom(
-      backgroundColor: Colors.red,
-    ).merge(_sharedStyles),
+  static final Map<ButtonVariant, VariantStyle> _variantStyles = {
+    ButtonVariant.primary: VariantStyle(
+      buttonStyle: ElevatedButton.styleFrom(
+        backgroundColor: Colors.orange,
+      ).merge(_sharedStyles),
+      textColor: Colors.white,
+    ),
+    ButtonVariant.secondary: VariantStyle(
+      buttonStyle: ElevatedButton.styleFrom(
+        backgroundColor: Colors.white,
+      ).merge(_sharedStyles),
+      textColor: Colors.orange,
+    ),
+    ButtonVariant.success: VariantStyle(
+      buttonStyle: ElevatedButton.styleFrom(
+        backgroundColor: Colors.green,
+      ).merge(_sharedStyles),
+      textColor: Colors.white,
+    ),
+    ButtonVariant.danger: VariantStyle(
+      buttonStyle: ElevatedButton.styleFrom(
+        backgroundColor: Colors.red,
+      ).merge(_sharedStyles),
+      textColor: Colors.white,
+    ),
   };
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle buttonStyle = _variantStyles[variant] as ButtonStyle;
+    final VariantStyle variantStyle =
+        _variantStyles[variant]!; // Default value will always be primary
+
+    final TextStyle textStyle = TextStyle(
+      fontSize: 20,
+      color: variantStyle.textColor,
+    );
+
     return Padding(
       padding: EdgeInsets.only(bottom: marginBottom),
       child: SizedBox(
         width: width,
         child: ElevatedButton(
           onPressed: onPressed,
-          style: buttonStyle,
+          style: variantStyle.buttonStyle,
           child: Text(
             label,
-            style: const TextStyle(fontSize: 20),
+            style: textStyle,
           ),
         ),
       ),
     );
   }
+}
+
+class VariantStyle {
+  final ButtonStyle buttonStyle;
+  final Color textColor;
+
+  VariantStyle({required this.buttonStyle, required this.textColor});
 }

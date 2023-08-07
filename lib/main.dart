@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xdfe8ec)),
         useMaterial3: true,
       ),
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
         routes: {
           '/': (context) => const ScreenWrapper(child: RootScreen()),
           '/login': (context) => const ScreenWrapper(child: LoginScreen()),
