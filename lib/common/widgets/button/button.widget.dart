@@ -6,14 +6,16 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final double width;
   final double marginBottom;
+  final double marginTop;
   final ButtonVariant variant;
 
   const CustomButton(
       {super.key,
       required this.label,
       required this.onPressed,
-      this.width = 200,
+      this.width = 300,
       this.marginBottom = 12,
+      this.marginTop = 0,
       this.variant = ButtonVariant.primary});
 
   static final ButtonStyle _sharedStyles = ElevatedButton.styleFrom(
@@ -60,7 +62,7 @@ class CustomButton extends StatelessWidget {
     );
 
     return Padding(
-      padding: EdgeInsets.only(bottom: marginBottom),
+      padding: EdgeInsets.only(bottom: marginBottom, top: marginTop),
       child: SizedBox(
         width: width,
         child: ElevatedButton(
