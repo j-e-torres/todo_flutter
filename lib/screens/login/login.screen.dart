@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_flutter/common/interfaces/auth/auth.interface.dart';
 import 'package:todo_flutter/common/widgets/button/button.widget.dart';
+
+import '../../common/providers/user/facades/user.facade.dart';
+import '../../common/providers/user/services/user-api.service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,13 +19,46 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _submitForm() {
+  late UserFacade _userFacade;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _userFacade = UserFacade(UserApiService());
+  // }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _userFacade = Provider.of<UserFacade>(context);
+  }
+
+  void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      // Handle form submission
-      // For example, you can perform login logic here
       String username = _usernameController.text;
       String password = _passwordController.text;
-      // Perform login with username and password
+
+      AuthLoginPayload payload = AuthLoginPayload(
+        username: username,
+        password: password,
+      );
+
+      await _userFacade.login(payload);
+
+      // if (_userFacade.loadingState != LoadingState.success) {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const Placeholder()),
+      //   );
+      // } else if (_userFacade.loadingState == LoadingState.success) {
+      //   Fluttertoast.showToast(
+      //     msg: 'Something went wrong, double check your username/password',
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     textColor: Colors.white,
+      //   );
+      // }
     }
   }
 
@@ -93,11 +132,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                CustomButton(
-                  marginTop: 50,
-                  label: 'Login',
-                  onPressed: () => {print('logged in')},
-                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 24,
+                  ),
+                  child: Column(children: [
+                    if (_userFacade.loadingState != LoadingState.loading)
+                      CustomButton(
+                        marginTop: 50,
+                        label: 'Login',
+                        onPressed: _submitForm,
+                      ),
+                    if (_userFacade.loadingState == LoadingState.loading)
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 50),
+                        child:
+                            CircularProgressIndicator(color: Colors.deepOrange),
+                      ),
+                  ]),
+                )
               ],
             ))
       ]),

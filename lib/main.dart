@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_flutter/screens/login/login.screen.dart';
 import 'package:todo_flutter/screens/root/root.screen.dart';
 import 'package:todo_flutter/screens/screen-wrapper/screen-wrapper.screen.dart';
+import 'common/providers/user/facades/user.facade.dart';
+import 'common/providers/user/services/user-api.service.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => UserFacade(UserApiService()), // You might need to adapt this
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
