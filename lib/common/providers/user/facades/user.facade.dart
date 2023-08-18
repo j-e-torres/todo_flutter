@@ -7,7 +7,7 @@ import 'package:todo_flutter/common/providers/user/services/user-api.service.dar
 
 import '../../../interfaces/auth/auth.interface.dart';
 
-enum LoadingState {
+enum LoginState {
   initial,
   loading,
   success,
@@ -17,8 +17,8 @@ enum LoadingState {
 class UserFacade extends ChangeNotifier {
   final UserApiService _userApiService;
 
-  LoadingState _loadingState = LoadingState.initial;
-  LoadingState get loadingState => _loadingState;
+  LoginState _loginState = LoginState.initial;
+  LoginState get loginState => _loginState;
 
   User? _user;
   User? get user => _user;
@@ -26,16 +26,17 @@ class UserFacade extends ChangeNotifier {
   UserFacade(this._userApiService);
 
   Future<void> login(AuthLoginPayload payload) async {
-    _loadingState = LoadingState.initial;
+    _loginState = LoginState.loading;
     notifyListeners();
 
     try {
       AuthResponseWithToken response = await _userApiService.login(payload);
       User? user = response.data[MODELS.user];
-      _loadingState = LoadingState.success;
+      _loginState = LoginState.success;
       _user = user;
+      print('USSERERRFACEFAE $user');
     } catch (e) {
-      _loadingState = LoadingState.error;
+      _loginState = LoginState.error;
       _user = null;
     }
     notifyListeners();

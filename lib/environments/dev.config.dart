@@ -7,13 +7,13 @@ class DevConfig extends EnvironmentConfig {
   // DevConfig(super.api, super.mainApi, super.production);
   DevConfig()
       : super(
-          api: _getApiUrl(),
+          api: getApiUrl(),
           // mainApi: _getMainApiUrl(),
           production: false,
           // ... initialize other configuration variables
         );
 
-  static String _getApiUrl() {
+  static String getApiUrl() {
     if (Platform.isAndroid) {
       return 'http://10.0.2.2:4000/v1'; // Android emulator
     } else if (Platform.isIOS) {

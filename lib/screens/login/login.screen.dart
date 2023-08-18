@@ -45,20 +45,25 @@ class _LoginScreenState extends State<LoginScreen> {
 
       await _userFacade.login(payload);
 
-      // if (_userFacade.loadingState != LoadingState.success) {
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => const Placeholder()),
-      //   );
-      // } else if (_userFacade.loadingState == LoadingState.success) {
-      //   Fluttertoast.showToast(
-      //     msg: 'Something went wrong, double check your username/password',
-      //     toastLength: Toast.LENGTH_SHORT,
-      //     gravity: ToastGravity.BOTTOM,
-      //     backgroundColor: Colors.red,
-      //     textColor: Colors.white,
-      //   );
-      // }
+      if (context.mounted) {
+        navigateOrShowToast(context, _userFacade.loginState);
+      } else {
+        return;
+      }
+    }
+  }
+
+  void navigateOrShowToast(BuildContext context, LoginState loginState) {
+    if (loginState == LoginState.success) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else if (loginState == LoginState.error) {
+      Fluttertoast.showToast(
+        msg: 'Something went wrong, double check your username/password',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.amber,
+        textColor: Colors.white,
+      );
     }
   }
 
@@ -137,13 +142,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     vertical: 24,
                   ),
                   child: Column(children: [
-                    if (_userFacade.loadingState != LoadingState.loading)
+                    if (_userFacade.loginState != LoginState.loading)
                       CustomButton(
                         marginTop: 50,
                         label: 'Login',
                         onPressed: _submitForm,
                       ),
-                    if (_userFacade.loadingState == LoadingState.loading)
+                    if (_userFacade.loginState == LoginState.loading)
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 50),
                         child:

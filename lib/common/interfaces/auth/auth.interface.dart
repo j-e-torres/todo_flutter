@@ -27,6 +27,14 @@ class AuthResponseWithToken extends ApiResponse<User> {
     required super.data,
     // You might need to pass other parameters to the constructor as well
   });
+
+  factory AuthResponseWithToken.fromJson(Map<String, dynamic> json) {
+    return AuthResponseWithToken(
+      data: json['data'],
+      status: json['status'],
+      token: json['token'],
+    );
+  }
 }
 
 class AuthSignupPayload extends AuthLoginPayload {

@@ -9,7 +9,8 @@ import 'common/providers/user/services/user-api.service.dart';
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (context) => UserFacade(UserApiService()), // You might need to adapt this
+      create: (context) =>
+          UserFacade(UserApiService()), // You might need to adapt this
       child: const MyApp(),
     ),
   );
