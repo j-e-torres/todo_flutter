@@ -9,14 +9,15 @@ class CustomButton extends StatelessWidget {
   final double marginTop;
   final ButtonVariant variant;
 
-  const CustomButton(
-      {super.key,
-      required this.label,
-      required this.onPressed,
-      this.width = 300,
-      this.marginBottom = 12,
-      this.marginTop = 0,
-      this.variant = ButtonVariant.primary});
+  const CustomButton({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    this.width = 300,
+    this.marginBottom = 12,
+    this.marginTop = 0,
+    this.variant = ButtonVariant.primary,
+  });
 
   static final ButtonStyle _sharedStyles = ElevatedButton.styleFrom(
       padding: const EdgeInsets.all(16),

@@ -6,6 +6,7 @@ import 'package:todo_flutter/common/widgets/button/button.widget.dart';
 
 import '../../common/providers/user/facades/user.facade.dart';
 import '../../common/providers/user/services/user-api.service.dart';
+import '../../common/widgets/form-field/form-field.widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -53,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+// TODO: make global toast functionality
   void navigateOrShowToast(BuildContext context, LoginState loginState) {
     if (loginState == LoginState.success) {
       Navigator.pushReplacementNamed(context, '/home');
@@ -79,63 +81,16 @@ class _LoginScreenState extends State<LoginScreen> {
             key: _formKey,
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: TextFormField(
-                    controller: _usernameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Username',
-                      labelStyle: TextStyle(
-                        color: Colors.orange,
-                      ),
-                      hintText: 'Enter username',
-                      hintStyle: TextStyle(
-                        color: Colors.black26,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.orange), // Unfocused color
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.orange,
-                        ),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your username';
-                      }
-                      return null;
-                    },
-                  ),
+                const CustomFormField(
+                  labelText: 'Username',
+                  hintText: 'Enter your username',
+                  validatorRequiredMsg: 'Username is required',
                 ),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(
-                      color: Colors.orange,
-                    ),
-                    hintText: 'Enter password',
-                    hintStyle: TextStyle(color: Colors.black26),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.orange), // Unfocused color
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.orange,
-                      ),
-                    ),
-                  ),
+                const CustomFormField(
+                  labelText: 'Password',
+                  hintText: 'Enter your password',
+                  validatorRequiredMsg: 'Password is required',
                   obscureText: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
