@@ -10,6 +10,7 @@ class CustomFormField extends StatelessWidget {
   final UnderlineInputBorder focusedBorder;
   final String validatorRequiredMsg;
   final bool obscureText;
+  final TextEditingController controller;
 
   final double marginBottom;
   final double marginTop;
@@ -38,6 +39,7 @@ class CustomFormField extends StatelessWidget {
     this.marginBottom = 12,
     this.marginTop = 0.0,
     this.obscureText = false,
+    required this.controller
   });
 
   @override
@@ -45,7 +47,7 @@ class CustomFormField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: marginBottom, top: marginTop),
       child: TextFormField(
-        // controller: _usernameController,
+        controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(
           labelText: labelText,

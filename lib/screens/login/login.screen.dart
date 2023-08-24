@@ -62,8 +62,8 @@ class _LoginScreenState extends State<LoginScreen> {
       Fluttertoast.showToast(
         msg: 'Something went wrong, double check your username/password',
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
-        backgroundColor: Colors.amber,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: Colors.orange,
         textColor: Colors.white,
       );
     }
@@ -81,16 +81,18 @@ class _LoginScreenState extends State<LoginScreen> {
             key: _formKey,
             child: Column(
               children: [
-                const CustomFormField(
+                CustomFormField(
                   labelText: 'Username',
                   hintText: 'Enter your username',
                   validatorRequiredMsg: 'Username is required',
+                  controller: _usernameController,
                 ),
-                const CustomFormField(
+                CustomFormField(
                   labelText: 'Password',
                   hintText: 'Enter your password',
                   validatorRequiredMsg: 'Password is required',
                   obscureText: true,
+                  controller: _passwordController,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(

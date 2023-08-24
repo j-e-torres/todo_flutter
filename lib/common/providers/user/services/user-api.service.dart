@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:http/http.dart';
 import 'package:todo_flutter/common/interfaces/api-response/api-response.interface.dart';
 import 'package:todo_flutter/common/interfaces/auth/auth.interface.dart';
 import 'package:http/http.dart' as http;
@@ -8,8 +9,8 @@ import '../../../models/user/user.model.dart';
 import '../../../../environments/dev.config.dart';
 
 class UserApiService {
-  late String _apiBaseUrl;
-  late String _apiUrl;
+  late final String _apiBaseUrl;
+  late final String _apiUrl;
   UserApiService()
       : _apiBaseUrl = DevConfig.getApiUrl(),
         _apiUrl = '${DevConfig.getApiUrl()}/auth';
@@ -18,7 +19,7 @@ class UserApiService {
     print('LOGINAUTHRESURL $_apiUrl');
 
     try {
-      final response = await http.post(
+      final Response response = await http.post(
         Uri.parse('$_apiUrl/login'),
         headers: {
           'Content-Type': 'application/json',
@@ -31,7 +32,7 @@ class UserApiService {
         ),
       );
 
-      final weee = response.statusCode;
+      final weee = response.body;
       print('WEEEEEE $weee');
       if (response.statusCode == 200) {
         final eee = AuthResponseWithToken.fromJson(jsonDecode(response.body));
